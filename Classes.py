@@ -69,7 +69,8 @@ class DoctorManager:
         with open("doctors.txt", "r") as file:
             for line in file:
                 doctor_info = line.strip().split("_")
-                doctor = Doctor(doctor_info[0], doctor_info[1], doctor_info[2], doctor_info[3], doctor_info[4], doctor_info[5])
+                doctor = Doctor(doctor_info[0], doctor_info[1], doctor_info[2], doctor_info[3], doctor_info[4],
+                                doctor_info[5])
                 self.doctors.append(doctor)
 
     def search_doctor_by_id(self):
@@ -79,9 +80,7 @@ class DoctorManager:
                 print(self.format_dr_info(doctor))
                 return
         print("Can't find the doctor with the same ID on the system")
-        
-       
-    
+
     def search_doctor_by_name(self):
         doctor_name = input("Enter the doctor name: ")
         for doctor in self.doctors:
@@ -89,40 +88,38 @@ class DoctorManager:
                 print(self.format_dr_info(doctor))
                 return
         print("Can't find the doctor with the same name on the system")
-        
-   
+
     def display_doctor_info(self, doctor):
-        return f"ID\t Name\t\t Specialization\t Working Time\t Qualification\t Room Number\n\n{str(doctor.doctor_id):5}{doctor.name:16}{doctor.specialization:16}{doctor.working_time:16}{doctor.qualification:16}{doctor.room_number}"     
-   
+        return f"ID\t Name\t\t Specialization\t Working Time\t Qualification\t Room Number\n\n{str(doctor.doctor_id):5}{doctor.name:16}{doctor.specialization:16}{doctor.working_time:16}{doctor.qualification:16}{doctor.room_number}"
 
     def edit_doctor_info_by_id(self):
-    edit = int(input("Enter Doctor ID of doctor you would like to edit\n"))
-    for doctor in self.doctors:
-        if doctor.id == edit:
-            self.doctors.remove(doctor)
-            new_doctor = self.enter_doctor_info()
-            open("doctors.txt", "w")
-            self.doctors.append(new_doctor)
-            break
-    else:
-        print("Cannot find the doctor...")
-    
-   
+        edit = input("Enter Doctor ID of doctor you would like to edit\n")
+        for i in range(len(self.doctors)):
+            if self.doctors[i].get_doctor_id() == edit:
+                self.doctors.pop(i)
+                new_doctor = self.enter_dr_info()
+                self.doctors.append(new_doctor)
+                with open("doctors.txt", "w") as file:
+                    for doctor in self.doctors:
+                        file.write(self.format_dr_info(doctor) + "\n")
+                print("Doctor information updated successfully!")
+                return
+        print("Cannot find the doctor with the specified ID...")
+
+
     def display_doctors_list(self):
         for doctor in self.doctors:
-            print(self.format_dr_info(doctor))
-    
-    
+            print(self.display_doctor_info(doctor))
+
     def add_dr_to_file(self):
         new_doctor = self.enter_dr_info()
         self.doctors.append(new_doctor)
         print("Doctor added successfully")
 
 
-            
 class Patient:
-    def __init__(self, id, name, disease, gender, age):
-        self.id = id
+    def __init__(self, patient_id, name, disease, gender, age):
+        self.id = patient_id
         self.name = name
         self.disease = disease
         self.gender = gender
@@ -165,7 +162,7 @@ class Patient:
 class PatientManager:
     def __init__(self):
         self.patients = []
-        self.read_patients_file()
+
 
     def format_patient_info_for_file(self, patient):
         return str(patient.id) + "_" + patient.name + "_" + patient.disease + "_" + patient.gender + "_" + str(
@@ -180,12 +177,12 @@ class PatientManager:
         return Patient(id, name, disease, gender, age)
 
     def read_patients_file(self):
-        with open("patients.txt", "r") as file:
-            for line in file:
+        with open("patients.txt", "r") as f:
+            for line in f:
                 patient_data = line.strip().split(",")
                 patient = Patient(*patient_data)
                 self.patients.append(patient)
-        return self.patients
+
 
     def search_patient_by_Id(self):
         user_input = input("Id of patient to search\n")
@@ -230,10 +227,10 @@ class PatientManager:
         print(f"Patient whose ID is {add_p.id} has been added\n")
 
 
-panakaj = Patient(id=12, name='Panakaj', disease='Cancer', gender='Male', age=30)
-sumit = Patient(id=13, name='Sumit', disease='Cold', gender='Male', age=23)
-alok = Patient(id=14, name='Alok', disease='Maleria', gender='Male', age=45)
-ravi = Patient(id=15, name='Ravi', disease='Diabetes', gender='Male', age=25)
+panakaj = Patient(patient_id=12, name='Panakaj', disease='Cancer', gender='Male', age=30)
+sumit = Patient(patient_id=13, name='Sumit', disease='Cold', gender='Male', age=23)
+alok = Patient(patient_id=14, name='Alok', disease='Maleria', gender='Male', age=45)
+ravi = Patient(patient_id=15, name='Ravi', disease='Diabetes', gender='Male', age=25)
 
 
 class Management:
@@ -274,7 +271,7 @@ class Management:
             elif user_input == 4:
                 self.doctor_manager.add_dr_to_file()
             elif user_input == 5:
-                self.doctor_manager.edit_doctor_info()
+                self.doctor_manager.edit_doctor_info_by_id()
             elif user_input == 6:
                 x = 0
             else:
@@ -283,7 +280,8 @@ class Management:
     def patients_menu(self):
         x = 2
         while x > 1:
-            user_input = int(input("Patient Menu:\n1 - Display patients list\n2 - Search for patient by ID\n3 - Add patient\n4 - Edit patient info\n5 - Back to the Main Menu\n"))
+            user_input = int(input(
+                "Patient Menu:\n1 - Display patients list\n2 - Search for patient by ID\n3 - Add patient\n4 - Edit patient info\n5 - Back to the Main Menu\n"))
 
             if user_input == 1:
                 self.patient_manager.display_patients_list()
@@ -297,3 +295,6 @@ class Management:
                 x = 0
             else:
                 print("Invalid input")
+
+
+Management().display_menu()
