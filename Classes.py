@@ -165,10 +165,10 @@ class PatientManager:
                 self.patients.append(patient)
         return self.patients
 
-    def search_patient_by_Id(self, p_id):
-        patients = []
-        for patient in patients:
-            if patient.id == p_id:
+    def search_patient_by_Id(self):
+        user_input = input("Id of patient to search\n")
+        for patient in self.patients:
+            if patient.id == user_input:
                 return self.display_patient_info(patient), True
             else:
                 return print("Can't find the patient....\n"), False
@@ -228,10 +228,10 @@ class Management:
                                    "or select 3 to stop:\n1 - Doctors\n2 - Patients\n3 - Exit Program\n"))
 
             if user_input == 1:
-                self.display_doctors_menu
+                self.doctors_menu()
 
             elif user_input == 2:
-                self.display_patients_menu
+                self.patients_menu()
 
             elif user_input == 3:
                 print("Thanks for using the program. Bye!\n")
@@ -258,3 +258,20 @@ class Management:
             else:
                 print("Invalid input")
 
+    def patients_menu(self):
+        x = 2
+        while x > 1:
+            user_input = int(input("Patient Menu:\n1 - Display patients list\n2 - Search for patient by ID\n3 - Add patient\n4 - Edit patient info\n5 - Back to the Main Menu\n"))
+
+            if user_input == 1:
+                self.patient_manager.display_patients_list()
+            elif user_input == 2:
+                self.patient_manager.search_patient_by_Id()
+            elif user_input == 3:
+                self.patient_manager.add_patient_to_file()
+            elif user_input == 4:
+                self.patient_manager.edit_patient_info_by_id()
+            elif user_input == 5:
+                x = 0
+            else:
+                print("Invalid input")
