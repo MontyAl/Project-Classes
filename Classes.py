@@ -104,7 +104,7 @@ class DoctorManager:
                 with open("doctors.txt", "w") as file:
                     for doctor in self.doctors:
                         file.write(self.format_dr_info(doctor) + "\n")
-                print("Doctor information updated successfully!")
+                print(f"Doctor whose ID is {new_doctor.doctor_id} has been edited")
                 return
         print("Cannot find the doctor with the specified ID...")
 
@@ -117,7 +117,7 @@ class DoctorManager:
     def add_dr_to_file(self):
         new_doctor = self.enter_dr_info()
         self.doctors.append(new_doctor)
-        print("Doctor added successfully")
+        print(f"Doctor whose ID is {new_doctor.doctor_id} has been added")
 
 
 class Patient:
