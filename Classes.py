@@ -199,15 +199,18 @@ class PatientManager:
         return f"{str(patient.id):5}{patient.name:12}{patient.disease:12}{patient.gender:9}{patient.age}"
 
     def edit_patient_info_by_id(self):
-        edit = int(input("Enter Patient ID of patient you would like to edit\n"))
-        for patient in self.patients:
-            if patient.id == edit:
-                self.patients.remove(patient)
+        patient_id = input("Please enter the id of the Patient that you want to edit their information: ")
+        for n in range(len(self.patients)):
+            if self.patients[n].get_id() == patient_id:
+                self.patients.pop(n)
                 new_patient = self.enter_patient_info()
-                open("patients.txt", "w")
                 self.patients.append(new_patient)
-            else:
-                print("Cannot find the patient...")
+                with open("patients.txt", "w") as file:
+                    for patient in self.patients:
+                        file.write(self.format_patient_info_for_file(patient) + "\n")
+                print(f"Patient whose ID is {new_patient.id} has been edited")
+                return
+        print("Cannot find the Patient with the specified ID...")
 
     def display_patients_list(self):
         for patient in self.patients:
