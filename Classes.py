@@ -1,6 +1,5 @@
-
 class Patient:
-    def __init__(self,id, name, disease, gender, age):
+    def __init__(self, id, name, disease, gender, age):
         self.id = id
         self.name = name
         self.disease = disease
@@ -22,13 +21,13 @@ class Patient:
     def get_age(self):
         return self.age
 
-    def set_id(self,id):
+    def set_id(self, id):
         self.id = id
 
     def set_name(self, name):
         self.name = name
 
-    def set_disease(self,disease):
+    def set_disease(self, disease):
         self.disease = disease
 
     def set_gender(self, gender):
@@ -47,7 +46,8 @@ class PatientManager:
         self.read_patients_file()
 
     def format_patient_info_for_file(self, patient):
-        return str(patient.id) + "_" + patient.name + "_" + patient.disease + "_" + patient.gender + "_" + str(patient.age)
+        return str(patient.id) + "_" + patient.name + "_" + patient.disease + "_" + patient.gender + "_" + str(
+            patient.age)
 
     def enter_patient_info(self):
         id = input("Enter Patient ID: \n")
@@ -108,11 +108,10 @@ class PatientManager:
         print(f"Patient whose ID is {add_p.id} has been added\n")
 
 
-panakaj = Patient(id= 12, name='Panakaj', disease='Cancer', gender='Male', age=30)
-sumit = Patient(id= 13, name='Sumit', disease='Cold', gender='Male', age=23)
+panakaj = Patient(id=12, name='Panakaj', disease='Cancer', gender='Male', age=30)
+sumit = Patient(id=13, name='Sumit', disease='Cold', gender='Male', age=23)
 alok = Patient(id=14, name='Alok', disease='Maleria', gender='Male', age=45)
 ravi = Patient(id=15, name='Ravi', disease='Diabetes', gender='Male', age=25)
-
 
 
 class Doctor:
@@ -125,7 +124,9 @@ class Doctor:
         self.room_number = room_number
 
     def formatDrInfo(self):
-        return str(self.id) + "_" + self.name + "_" + self.specialization + "_" + self.working_time + "_" + self.qualification + "_" + str(self.room_number)
+        return str(
+            self.id) + "_" + self.name + "_" + self.specialization + "_" + self.working_time + "_" + self.qualification + "_" + str(
+            self.room_number)
 
     def enterDrInfo(self):
         self.id = input("Enter Doctor ID: ")
@@ -185,59 +186,46 @@ class Doctor:
             file.write(self.formatDrInfo() + "\n")
 
 
+class Management:
 
-class Facility:
-    def __init__(self, facility_name):
-        self.facility_name = facility_name
+    def __init__(self):
+        self.doctor_manager = DoctorManager()
+        self.patient_manager = PatientManager()
 
-    def addFacility(self):
-        self.facility_name = input("Enter Facility Name: ")
-        with open('facilities.txt', 'a') as file:
-            file.write(self.facility_name + "\n")
+    def display_menu(self):
+        x = 2
+        while x > 1:
+            user_input = int(input("Welcome to Alberta Hospital (AH) Management system\n Select from the following "
+                                   "options,"
+                                   "or select 3 to stop:\n1 - Doctors\n2 - Patients\n3 - Exit Program\n"))
 
-    def displayFacilities(self):
-        with open('facilities.txt', 'r') as file:
-            for line in file:
-                print(line.strip())
+            if user_input == 1:
+                self.display_doctors_menu
 
-    def writeListOfFacilitiesToFile(self, facilities):
-        with open('facilities.txt', 'w') as file:
-            for facility in facilities:
-                file.write(facility.facility_name + "\n")
+            elif user_input == 2:
+                self.display_patients_menu
 
-                
+            elif user_input == 3:
+                print("Thanks for using the program. Bye!\n")
+                x = 0
 
-class Laboratory:
-    def __init__(self, lab_name, cost):
-        self.lab_name = lab_name
-        self.cost = cost
-
-    def addLabToFile(self):
-        with open("laboratories.txt", "a") as f:
-            f.write(self.formatLabInfo() + "\n")
-
-    def writeListOfLabsToFile(self, labs):
-        with open("laboratories.txt", "w") as f:
-            for lab in labs:
-                f.write(lab.formatLabInfo() + "\n")
-
-    def displayLabsList(self):
-        labs = self.readLaboratoriesFile()
-        for lab in labs:
-            print(lab.lab_name, lab.cost)
-
-    def formatLabInfo(self):
-        return f"{self.lab_name},{self.cost}"
-
-    def enterLaboratoryInfo(self):
-        lab_name = input("Enter laboratory name: ")
-        cost = float(input("Enter laboratory cost: "))
-        return Laboratory(lab_name, cost)
-
-    def readLaboratoriesFile(self):
-        labs = []
-        with open("laboratories.txt", "r") as f:
-            for line in f:
-                lab_name, cost = line.strip().split(",")
-                labs.append(Laboratory(lab_name, float(cost)))
-        return labs
+    def doctors_menu(self):
+        x = 2
+        while x > 1:
+            user_input = int(input("Doctors Menu:\n1 - Display Doctors list\n2 - Search for doctor by ID\n3 - Search "
+                                   "for"
+                                   "doctor by name\n4 - Add doctor\n5 - Edit doctor info\n6 - Back to the Main Menu\n"))
+            if user_input == 1:
+                self.doctor_manager.display_doctors_list()
+            elif user_input == 2:
+                self.doctor_manager.search_doctor_by_id()
+            elif user_input == 3:
+                self.doctor_manager.search_doctor_by_name()
+            elif user_input == 4:
+                self.doctor_manager.add_dr_to_file()
+            elif user_input == 5:
+                self.doctor_manager.edit_doctor_info()
+            elif user_input == 6:
+                x = 0
+            else:
+                print("Invalid input")
