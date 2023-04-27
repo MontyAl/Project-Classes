@@ -1,3 +1,143 @@
+class Doctor:
+    def __init__(self, doctor_id="", name="", specialization="", working_time="", qualification="", room_number=""):
+        self.doctor_id = doctor_id
+        self.name = name
+        self.specialization = specialization
+        self.working_time = working_time
+        self.qualification = qualification
+        self.room_number = room_number
+
+    def get_doctor_id(self):
+        return self.doctor_id
+
+    def set_doctor_id(self, new_id):
+        self.doctor_id = new_id
+
+    def get_name(self):
+        return self.name
+
+    def set_name(self, new_name):
+        self.name = new_name
+
+    def get_specialization(self):
+        return self.specialization
+
+    def set_specialization(self, new_specialization):
+        self.specialization = new_specialization
+
+    def get_working_time(self):
+        return self.working_time
+
+    def set_working_time(self, new_working_time):
+        self.working_time = new_working_time
+
+    def get_qualification(self):
+        return self.qualification
+
+    def set_qualification(self, new_qualification):
+        self.qualification = new_qualification
+
+    def get_room_number(self):
+        return self.room_number
+
+    def set_room_number(self, new_room_number):
+        self.room_number = new_room_number
+
+    def __str__(self):
+        return f"{self.doctor_id}_{self.name}_{self.specialization}_{self.working_time}_{self.qualification}_{self.room_number}"
+
+
+class DoctorManager:
+    def __init__(self):
+        self.doctors = []
+        self.read_doctors_file()
+
+    def format_dr_info(self, doctor):
+        return str(doctor)
+
+    def enter_dr_info(self):
+        doctor_id = input("Enter the doctor's ID: ")
+        name = input("Enter the doctor's name: ")
+        specialization = input("Enter the doctor's specialization: ")
+        working_time = input("Enter the doctor's working time: ")
+        qualification = input("Enter the doctor's qualification: ")
+        room_number = input("Enter the doctor's room number: ")
+        new_doctor = Doctor(doctor_id, name, specialization, working_time, qualification, room_number)
+        return new_doctor
+
+    def read_doctors_file(self):
+        with open("doctors.txt", "r") as file:
+            for line in file:
+                doctor_info = line.strip().split("_")
+                doctor = Doctor(doctor_info[0], doctor_info[1], doctor_info[2], doctor_info[3], doctor_info[4], doctor_info[5])
+                self.doctors.append(doctor)
+
+    def search_doctor_by_id(self):
+        doctor_id = input("Enter the doctor ID: ")
+        for doctor in self.doctors:
+            if doctor.get_doctor_id() == doctor_id:
+                print(self.format_dr_info(doctor))
+                return
+        print("Can't find the doctor with the same ID on the system")
+
+    def search_doctor_by_name(self):
+        doctor_name = input("Enter the doctor name: ")
+        for doctor in self.doctors:
+            if doctor.get_name() == doctor_name:
+                print(self.format_dr_info(doctor))
+                return
+        print("Can't find the doctor with the same name on the system")
+
+    def add_doctor(self):
+        new_doctor = self.enter_dr_info()
+        self.doctors.append(new_doctor)
+        print("Doctor added successfully")
+
+    def edit_doctor_info(self):
+        doctor_id = input("Enter the doctor ID: ")
+        for doctor in self.doctors:
+
+            class Patient:
+                def __init__(self, id, name, disease, gender, age):
+                    self.id = id
+                    self.name = name
+                    self.disease = disease
+                    self.gender = gender
+                    self.age = age
+
+                def get_id(self):
+                    return self.id
+
+                def get_name(self):
+                    return self.name
+
+                def get_disease(self):
+                    return self.disease
+
+                def get_gender(self):
+                    return self.gender
+
+                def get_age(self):
+                    return self.age
+
+                def set_id(self, id):
+                    self.id = id
+
+                def set_name(self, name):
+                    self.name = name
+
+                def set_disease(self, disease):
+                    self.disease = disease
+
+                def set_gender(self, gender):
+                    self.gender = gender
+
+                def set_age(self, age):
+                    self.age = age
+
+                def __str__(self):
+                    return f"{self.id}_{self.name}_{self.disease}_{self.gender}_{self.age}"
+
 class Patient:
     def __init__(self, id, name, disease, gender, age):
         self.id = id
@@ -114,78 +254,6 @@ alok = Patient(id=14, name='Alok', disease='Maleria', gender='Male', age=45)
 ravi = Patient(id=15, name='Ravi', disease='Diabetes', gender='Male', age=25)
 
 
-class Doctor:
-    def __init__(self, id, name, specialization, working_time, qualification, room_number):
-        self.id = id
-        self.name = name
-        self.specialization = specialization
-        self.working_time = working_time
-        self.qualification = qualification
-        self.room_number = room_number
-
-    def formatDrInfo(self):
-        return str(
-            self.id) + "_" + self.name + "_" + self.specialization + "_" + self.working_time + "_" + self.qualification + "_" + str(
-            self.room_number)
-
-    def enterDrInfo(self):
-        self.id = input("Enter Doctor ID: ")
-        self.name = input("Enter Doctor Name: ")
-        self.specialization = input("Enter Doctor Specialization: ")
-        self.working_time = input("Enter Doctor Working Time: ")
-        self.qualification = input("Enter Doctor Qualification: ")
-        self.room_number = int(input("Enter Room Number: "))
-
-    def readDoctorsFile(self):
-        doctors = []
-        with open('doctors.txt', 'r') as file:
-            for line in file:
-                data = line.strip().split("_")
-                doctor = Doctor(data[0], data[1], data[2], data[3], data[4], data[5])
-                doctors.append(doctor)
-        return doctors
-
-    def searchDoctorById(self, id):
-        doctors = self.readDoctorsFile()
-        for doctor in doctors:
-            if doctor.id == id:
-                return doctor
-        return None
-
-    def searchDoctorByName(self, name):
-        doctors = self.readDoctorsFile()
-        for doctor in doctors:
-            if doctor.name == name:
-                return doctor
-        return None
-
-    def displayDoctorInfo(self):
-        print("ID: ", self.id)
-        print("Name: ", self.name)
-        print("Specialization: ", self.specialization)
-        print("Working Time: ", self.working_time)
-        print("Qualification: ", self.qualification)
-        print("Room Number: ", self.room_number)
-
-    def editDoctorInfo(self):
-        self.enterDrInfo()
-
-    def displayDoctorsList(self):
-        doctors = self.readDoctorsFile()
-        for doctor in doctors:
-            print(doctor.formatDrInfo())
-
-    def writeListOfDoctorsToFile(self, doctors):
-        with open('doctors.txt', 'w') as file:
-            for doctor in doctors:
-                file.write(doctor.formatDrInfo() + "\n")
-
-    def addDrToFile(self):
-        self.enterDrInfo()
-        with open('doctors.txt', 'a') as file:
-            file.write(self.formatDrInfo() + "\n")
-
-
 class Management:
 
     def __init__(self):
@@ -229,3 +297,4 @@ class Management:
                 x = 0
             else:
                 print("Invalid input")
+
