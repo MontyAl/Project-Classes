@@ -183,7 +183,7 @@ class PatientManager:
             for line in f:
                 patient_info = line.strip().split("_")
                 patient = Patient(patient_info[0], patient_info[1], patient_info[2], patient_info[3], patient_info[4],
-                                 )
+                                )
                 self.patients.append(patient)
 
     def search_patient_by_Id(self):
