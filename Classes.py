@@ -87,3 +87,40 @@ class Facility:
         with open('facilities.txt', 'w') as file:
             for facility in facilities:
                 file.write(facility.facility_name + "\n")
+
+                
+
+class Laboratory:
+    def __init__(self, lab_name, cost):
+        self.lab_name = lab_name
+        self.cost = cost
+
+    def addLabToFile(self):
+        with open("laboratories.txt", "a") as f:
+            f.write(self.formatLabInfo() + "\n")
+
+    def writeListOfLabsToFile(self, labs):
+        with open("laboratories.txt", "w") as f:
+            for lab in labs:
+                f.write(lab.formatLabInfo() + "\n")
+
+    def displayLabsList(self):
+        labs = self.readLaboratoriesFile()
+        for lab in labs:
+            print(lab.lab_name, lab.cost)
+
+    def formatLabInfo(self):
+        return f"{self.lab_name},{self.cost}"
+
+    def enterLaboratoryInfo():
+        lab_name = input("Enter laboratory name: ")
+        cost = float(input("Enter laboratory cost: "))
+        return Laboratory(lab_name, cost)
+
+    def readLaboratoriesFile():
+        labs = []
+        with open("laboratories.txt", "r") as f:
+            for line in f:
+                lab_name, cost = line.strip().split(",")
+                labs.append(Laboratory(lab_name, float(cost)))
+        return labs
