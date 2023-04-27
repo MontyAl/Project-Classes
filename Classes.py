@@ -94,7 +94,12 @@ class DoctorManager:
     def display_doctor_info(self, doctor):
         return f"ID\t Name\t\t Specialization\t Working Time\t Qualification\t Room Number\n\n{str(doctor.doctor_id):5}{doctor.name:16}{doctor.specialization:16}{doctor.working_time:16}{doctor.qualification:16}{doctor.room_number}"     
    
+
+    def edit_doctor_info(self):
+        doctor_id = input("Enter the doctor ID: ")
+        for doctor in self.doctors:
     
+   
     def display_doctors_list(self):
         for doctor in self.doctors:
             print(self.format_dr_info(doctor))
@@ -105,9 +110,6 @@ class DoctorManager:
         self.doctors.append(new_doctor)
         print("Doctor added successfully")
 
-    def edit_doctor_info(self):
-        doctor_id = input("Enter the doctor ID: ")
-        for doctor in self.doctors:
 
             
 class Patient:
