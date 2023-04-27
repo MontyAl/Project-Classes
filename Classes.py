@@ -77,7 +77,8 @@ class DoctorManager:
         doctor_id = input("Enter the doctor ID: ")
         for doctor in self.doctors:
             if doctor.get_doctor_id() == doctor_id:
-                print(self.format_dr_info(doctor))
+                print(f"\nID\t Name\t\t Specialization\t Working Time\t Qualification\t Room Number\n\n")
+                print(self.display_doctor_info(doctor))
                 return
         print("Can't find the doctor with the same ID on the system")
 
@@ -85,12 +86,13 @@ class DoctorManager:
         doctor_name = input("Enter the doctor name: ")
         for doctor in self.doctors:
             if doctor.get_name() == doctor_name:
-                print(self.format_dr_info(doctor))
+                print(f"\nID\t Name\t\t Specialization\t Working Time\t Qualification\t Room Number\n\n")
+                print(self.display_doctor_info(doctor))
                 return
         print("Can't find the doctor with the same name on the system")
 
     def display_doctor_info(self, doctor):
-        return f"ID\t Name\t\t Specialization\t Working Time\t Qualification\t Room Number\n\n{str(doctor.doctor_id):5}{doctor.name:16}{doctor.specialization:16}{doctor.working_time:16}{doctor.qualification:16}{doctor.room_number}"
+        return f"{str(doctor.doctor_id):5}{doctor.name:16}{doctor.specialization:16}{doctor.working_time:16}{doctor.qualification:16}{doctor.room_number}\n"
 
     def edit_doctor_info_by_id(self):
         edit = input("Enter Doctor ID of doctor you would like to edit\n")
@@ -108,6 +110,7 @@ class DoctorManager:
 
 
     def display_doctors_list(self):
+        print(f"ID\t Name\t\t Specialization\t Working Time\t Qualification\t Room Number\n\n")
         for doctor in self.doctors:
             print(self.display_doctor_info(doctor))
 
