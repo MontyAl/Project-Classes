@@ -100,7 +100,7 @@ class DoctorManager:
             print(self.format_dr_info(doctor))
     
     
-    def add_doctor(self):
+    def add_dr_to_file(self):
         new_doctor = self.enter_dr_info()
         self.doctors.append(new_doctor)
         print("Doctor added successfully")
