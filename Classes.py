@@ -79,7 +79,9 @@ class DoctorManager:
                 print(self.format_dr_info(doctor))
                 return
         print("Can't find the doctor with the same ID on the system")
-
+        
+       
+    
     def search_doctor_by_name(self):
         doctor_name = input("Enter the doctor name: ")
         for doctor in self.doctors:
@@ -87,7 +89,17 @@ class DoctorManager:
                 print(self.format_dr_info(doctor))
                 return
         print("Can't find the doctor with the same name on the system")
-
+        
+   
+    def display_doctor_info(self, doctor):
+        return f"ID\t Name\t\t Specialization\t Working Time\t Qualification\t Room Number\n\n{str(doctor.doctor_id):5}{doctor.name:16}{doctor.specialization:16}{doctor.working_time:16}{doctor.qualification:16}{doctor.room_number}"     
+   
+    
+    def display_doctors_list(self):
+        for doctor in self.doctors:
+            print(self.format_dr_info(doctor))
+    
+    
     def add_doctor(self):
         new_doctor = self.enter_dr_info()
         self.doctors.append(new_doctor)
