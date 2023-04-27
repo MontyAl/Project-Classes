@@ -95,9 +95,17 @@ class DoctorManager:
         return f"ID\t Name\t\t Specialization\t Working Time\t Qualification\t Room Number\n\n{str(doctor.doctor_id):5}{doctor.name:16}{doctor.specialization:16}{doctor.working_time:16}{doctor.qualification:16}{doctor.room_number}"     
    
 
-    def edit_doctor_info(self):
-        doctor_id = input("Enter the doctor ID: ")
-        for doctor in self.doctors:
+    def edit_doctor_info_by_id(self):
+    edit = int(input("Enter Doctor ID of doctor you would like to edit\n"))
+    for doctor in self.doctors:
+        if doctor.id == edit:
+            self.doctors.remove(doctor)
+            new_doctor = self.enter_doctor_info()
+            open("doctors.txt", "w")
+            self.doctors.append(new_doctor)
+            break
+    else:
+        print("Cannot find the doctor...")
     
    
     def display_doctors_list(self):
