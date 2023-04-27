@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 class Patient:
     def __init__(self,id, name, disease, gender, age):
         self.id = id
@@ -41,12 +41,80 @@ class Patient:
         return f"{self.id}_{self.name}_{self.disease}_{self.gender}_{self.age}"
 
 
+class PatientManager:
+    def __init__(self):
+        self.patients = []
+        self.read_patients_file()
+
+    def format_patient_info_for_file(self, patient):
+        return str(patient.id) + "_" + patient.name + "_" + patient.disease + "_" + patient.gender + "_" + str(patient.age)
+
+    def enter_patient_info(self):
+        id = input("Enter Patient ID: \n")
+        name = input("Enter Patient Name: \n")
+        disease = input("Enter Patient Disease: \n")
+        gender = input("Enter Patient Gender: \n")
+        age = input("Enter Patient Age \n")
+        return Patient(id, name, disease, gender, age)
+
+    def read_patients_file(self):
+        with open("patients.txt", "r") as file:
+            for line in file:
+                patient_data = line.strip().split(",")
+                patient = Patient(*patient_data)
+                self.patients.append(patient)
+        return self.patients
+
+    def search_patient_by_Id(self, p_id):
+        patients = []
+        for patient in patients:
+            if patient.id == p_id:
+                return self.display_patient_info(patient), True
+            else:
+                return print("Can't find the patient....\n"), False
+
+    def display_patient_info(self, patient):
+        return f"ID\t Name\t\t\t Disease \tGender\t Age \n\n{str(patient.id):5}{patient.name:16}{patient.disease:11}{patient.gender:9}{patient.age}"
+
+    def edit_patient_info_by_id(self):
+        edit = int(input("Enter Patient ID of patient you would like to edit\n"))
+        for patient in self.patients:
+            if patient.id == edit:
+                self.patients.remove(patient)
+                new_patient = self.enter_patient_info()
+                open("patients.txt", "w")
+                self.patients.append(new_patient)
+            else:
+                print("Cannot find the patient...")
+
+    def display_patients_list(self):
+        for patient in self.patients:
+            return print(f"{self.display_patient_info(patient)}\n")
+
+    def write_list_of_patients_to_file(self):
+        for p in self.patients:
+            patient = self.format_patient_info_for_file(p)
+            pat = open("patients.txt", "a")
+            pat.write(patient)
+            pat.close()
+
+    def add_patient_to_file(self):
+        add_p = self.enter_patient_info()
+        self.patients.append(add_p)
+        add_p_formatted = self.format_patient_info_for_file(add_p)
+        add_p_to_f = open("patients.txt", "a")
+        add_p_to_f.write(add_p_formatted)
+        add_p_to_f.close()
+        print(f"Patient whose ID is {add_p.id} has been added\n")
+
+
 panakaj = Patient(id= 12, name='Panakaj', disease='Cancer', gender='Male', age=30)
 sumit = Patient(id= 13, name='Sumit', disease='Cold', gender='Male', age=23)
 alok = Patient(id=14, name='Alok', disease='Maleria', gender='Male', age=45)
 ravi = Patient(id=15, name='Ravi', disease='Diabetes', gender='Male', age=25)
 
-=======
+
+
 class Doctor:
     def __init__(self, id, name, specialization, working_time, qualification, room_number):
         self.id = id
@@ -161,16 +229,15 @@ class Laboratory:
     def formatLabInfo(self):
         return f"{self.lab_name},{self.cost}"
 
-    def enterLaboratoryInfo():
+    def enterLaboratoryInfo(self):
         lab_name = input("Enter laboratory name: ")
         cost = float(input("Enter laboratory cost: "))
         return Laboratory(lab_name, cost)
 
-    def readLaboratoriesFile():
+    def readLaboratoriesFile(self):
         labs = []
         with open("laboratories.txt", "r") as f:
             for line in f:
                 lab_name, cost = line.strip().split(",")
                 labs.append(Laboratory(lab_name, float(cost)))
         return labs
->>>>>>> f3983b4fc2d8d7e7ef55d07b51d4d07ddd0942a3
